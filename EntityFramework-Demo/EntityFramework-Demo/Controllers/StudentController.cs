@@ -23,16 +23,54 @@ namespace EntityFramework_Demo.Controllers
             Student Std;
             if (Students.Count == 0)
             {
-                Std = new Student() { StudentName = "Anas", Age = 40 };
-                DB.Students.Add(Std);
+                //---------
+                //Adding Classes
+                var Clss = new TeachingClass()
+                {
+                    ClassName = "Class A"
+                };
+                DB.TeachingClasses.Add(Clss);
 
-                var Std2 = new Student() { StudentName = "Mohammad", Age = 30 };
+                var Clss2 = new TeachingClass()
+                {
+                    ClassName = "Class A"
+                };
+                DB.TeachingClasses.Add(Clss2);
+                DB.SaveChanges();
+                //---------
+                //Adding Students
+                Std = new Student() { StudentName = "Anas", Age = 40 ,TeachingClassId= Clss.Id};
+                DB.Students.Add(Std);
+                
+                var Std2 = new Student() { StudentName = "Mohammad", Age = 30, TeachingClassId = Clss.Id };
                 DB.Students.Add(Std2);
 
-                var Std3 = new Student() { StudentName = "Bisher", Age = 30 };
+                var Std3 = new Student() { StudentName = "Bisher", Age = 30, TeachingClassId = Clss.Id };
                 DB.Students.Add(Std3);
+                DB.SaveChanges();
+                //---------
+                //Adding Homeworks
+                var hw = new Homework()
+                {
+                    Title="homework 1",
+                    StudentId=Std2.StudentId,
+                };
+                DB.Homework.Add(hw);
+                var hw2 = new Homework()
+                {
+                    Title = "homework 2",
+                    StudentId = Std2.StudentId,
+                };
+                DB.Homework.Add(hw2);
+                var hw3 = new Homework()
+                {
+                    Title = "homework 3",
+                    StudentId = Std2.StudentId,
+                };
+                DB.Homework.Add(hw3);
 
                 DB.SaveChanges();
+                //---------
                 Students = DB.Students.ToList();
             }
             //-------------------------------
@@ -99,6 +137,23 @@ namespace EntityFramework_Demo.Controllers
 
             return View(List);
         }
+        public ActionResult LazyLoading()
+        {
+            System.Diagnostics.Debugger.Break();
+
+            //Without Include (Lazy Loaing)
+            var DB = new MyContext();
+            var students = DB.Students.ToList();
+             
+            //With Include (Eager Loading)
+            var query= DB.Students.Include("Class").Include("Homeworks"); //you can include children by using Include("Class.Teacher")
+            var queryText = query.ToString();
+            students = query.ToList();
+
+
+            return View("Index",students);
+        }
+
 
     }
 }

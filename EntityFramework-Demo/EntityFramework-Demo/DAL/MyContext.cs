@@ -13,6 +13,8 @@ namespace EntityFramework_Demo.DAL
 
             Database.SetInitializer<MyContext>(new DropCreateDatabaseIfModelChanges<MyContext>());
 
+            this.Configuration.LazyLoadingEnabled = false;
+
             //Database.SetInitializer<MyContext>(new CreateDatabaseIfNotExists<MyContext>()); //Default
             //Database.SetInitializer<MyContext>(new DropCreateDatabaseAlways<MyContext>());
             //Database.SetInitializer<MyContext>(new SchoolDBInitializer());
@@ -20,6 +22,8 @@ namespace EntityFramework_Demo.DAL
 
 
         public DbSet<Student> Students { get; set; }
+        public DbSet<TeachingClass> TeachingClasses { get; set; }
+        public DbSet<Homework> Homework { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

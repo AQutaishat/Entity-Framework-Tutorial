@@ -20,5 +20,11 @@ namespace EntityFramework_Demo
         
         [NotMapped]
         public String NotMappedProperty { get; set; }
+
+        #region *** Navigation **
+        public int TeachingClassId { get; set; }
+        public virtual TeachingClass Class { get; set; }
+        public virtual ICollection<Homework> Homeworks { get; set; }
+        #endregion *** Navigation **
     }
 }
