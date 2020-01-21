@@ -17,65 +17,12 @@ namespace EntityFramework_Demo.Controllers
             //Create Database
             var DB = new MyContext();
             var Students = DB.Students.ToList();
-
             //-------------------------------
             //Add Student
-            Student Std;
-            if (Students.Count == 0)
-            {
-                //---------
-                //Adding Classes
-                var Clss = new TeachingClass()
-                {
-                    ClassName = "Class A"
-                };
-                DB.TeachingClasses.Add(Clss);
-
-                var Clss2 = new TeachingClass()
-                {
-                    ClassName = "Class A"
-                };
-                DB.TeachingClasses.Add(Clss2);
-                DB.SaveChanges();
-                //---------
-                //Adding Students
-                Std = new Student() { StudentName = "Anas", Age = 40 ,TeachingClassId= Clss.Id};
-                DB.Students.Add(Std);
-                
-                var Std2 = new Student() { StudentName = "Mohammad", Age = 30, TeachingClassId = Clss.Id };
-                DB.Students.Add(Std2);
-
-                var Std3 = new Student() { StudentName = "Bisher", Age = 30, TeachingClassId = Clss.Id };
-                DB.Students.Add(Std3);
-                DB.SaveChanges();
-                //---------
-                //Adding Homeworks
-                var hw = new Homework()
-                {
-                    Title="homework 1",
-                    StudentId=Std2.StudentId,
-                };
-                DB.Homework.Add(hw);
-                var hw2 = new Homework()
-                {
-                    Title = "homework 2",
-                    StudentId = Std2.StudentId,
-                };
-                DB.Homework.Add(hw2);
-                var hw3 = new Homework()
-                {
-                    Title = "homework 3",
-                    StudentId = Std2.StudentId,
-                };
-                DB.Homework.Add(hw3);
-
-                DB.SaveChanges();
-                //---------
-                Students = DB.Students.ToList();
-            }
+            // ****** Mooved to seeder **********
             //-------------------------------
             //Update Student
-            Std = DB.Students.Where(x => x.StudentId == 1).FirstOrDefault();
+            Student  Std = DB.Students.Where(x => x.StudentId == 1).FirstOrDefault();
             if (Std != null)
             {
                 Std.StudentName = "Updated";

@@ -11,9 +11,9 @@ namespace EntityFramework_Demo.DAL
         public MyContext() : base("name=MyConnection")
         {
 
-            Database.SetInitializer<MyContext>(new DropCreateDatabaseIfModelChanges<MyContext>());
+            //Database.SetInitializer<MyContext>(new DropCreateDatabaseIfModelChanges<MyContext>());
 
-            this.Configuration.LazyLoadingEnabled = false;
+            //this.Configuration.LazyLoadingEnabled = false;
 
             //Database.SetInitializer<MyContext>(new CreateDatabaseIfNotExists<MyContext>()); //Default
             //Database.SetInitializer<MyContext>(new DropCreateDatabaseAlways<MyContext>());
