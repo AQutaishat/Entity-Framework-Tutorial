@@ -1,6 +1,7 @@
 ﻿using EntityFramework_Demo.DAL;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,7 +13,7 @@ namespace EntityFramework_Demo.Controllers
         // GET: Student
         public ActionResult Index()
         {
-            System.Diagnostics.Debugger.Break();
+                System.Diagnostics.Debugger.Break();
             //-------------------------------
             //Create Database
             var DB = new MyContext();
@@ -102,5 +103,26 @@ namespace EntityFramework_Demo.Controllers
         }
 
 
+        public ActionResult EFCache()
+        {
+            System.Diagnostics.Debugger.Break();
+
+            //Without Include (Lazy Loaing)
+            var DB = new MyContext();
+            var Std = new Student()
+            {
+                StudentId=2,
+                StudentName = "Elton",
+                Age = 18,
+                TeachingClassId=1
+            };
+            var Entities = DB.Set<Student>();
+            Entities.Attach(Std);
+            DB.Entry(Std).State = EntityState.Modified;
+            DB.SaveChanges();
+
+            var students = DB.Students.ToList();
+            return View("Index", students);
+        }
     }
 }
