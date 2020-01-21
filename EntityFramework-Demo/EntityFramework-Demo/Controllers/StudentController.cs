@@ -20,29 +20,38 @@ namespace EntityFramework_Demo.Controllers
 
             //-------------------------------
             //Add Student
-            var Std = new Student() { StudentName = "Anas", Age = 40 };
-            DB.Students.Add(Std);
+            Student Std;
+            if (Students.Count == 0)
+            {
+                Std = new Student() { StudentName = "Anas", Age = 40 };
+                DB.Students.Add(Std);
 
-            var Std2 = new Student() { StudentName = "Mohammad", Age = 30 };
-            DB.Students.Add(Std2);
+                var Std2 = new Student() { StudentName = "Mohammad", Age = 30 };
+                DB.Students.Add(Std2);
 
-            var Std3 = new Student() { StudentName = "Bisher", Age = 30 };
-            DB.Students.Add(Std3);
+                var Std3 = new Student() { StudentName = "Bisher", Age = 30 };
+                DB.Students.Add(Std3);
 
-            DB.SaveChanges();
+                DB.SaveChanges();
+            }
             //-------------------------------
             //Update Student
             Std = DB.Students.Where(x => x.StudentId == 1).FirstOrDefault();
-            Std.StudentName = "Updated";
-            //DB.Students.Update(std); //Wrong
-            DB.SaveChanges();
+            if (Std != null)
+            {
+                Std.StudentName = "Updated";
+                //DB.Students.Update(std); //Wrong
+                DB.SaveChanges();
+            }
 
             //-------------------------------
             //Remove Student
             Std = DB.Students.Where(x => x.StudentId == 1).FirstOrDefault();
-            DB.Students.Remove(Std);
-            DB.SaveChanges();
-
+            if (Std != null)
+            {
+                DB.Students.Remove(Std);
+                DB.SaveChanges();
+            }
             //-------------------------------
             //First vs Single
             Std = DB.Students.Where(x => x.Age == 30).First();
@@ -62,5 +71,7 @@ namespace EntityFramework_Demo.Controllers
             //-------------------------------
             return View(Students);
         }
+
+
     }
 }
