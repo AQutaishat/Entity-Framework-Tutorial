@@ -124,5 +124,36 @@ namespace EntityFramework_Demo.Controllers
             var students = DB.Students.ToList();
             return View("Index", students);
         }
+
+        public ActionResult TestRepository()
+        {
+            System.Diagnostics.Debugger.Break();
+
+            var Repo = new Repository<Student, MyContext>();
+            //---------
+            //Create
+            var std = new Student()
+            {
+                StudentName = "Sarah",
+                Age = 25,
+                TeachingClassId = 1
+            };
+            Repo.Create(std);
+            //---------
+            //Update
+            var Std2 = new Student()
+            {
+                StudentId = 2,
+                StudentName = "Elton",
+                Age = 18,
+                TeachingClassId = 1
+            };
+            Repo.Update(Std2);
+
+            //---------
+            var DB = new MyContext();
+            var students = DB.Students.ToList();
+            return View("Index", students);
+        }
     }
 }
