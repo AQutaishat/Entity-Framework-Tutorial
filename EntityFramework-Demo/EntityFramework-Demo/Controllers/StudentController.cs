@@ -33,6 +33,7 @@ namespace EntityFramework_Demo.Controllers
                 DB.Students.Add(Std3);
 
                 DB.SaveChanges();
+                Students = DB.Students.ToList();
             }
             //-------------------------------
             //Update Student
@@ -72,6 +73,32 @@ namespace EntityFramework_Demo.Controllers
             return View(Students);
         }
 
+        public ActionResult IQuerableVSIEnumarable()
+        {
+            System.Diagnostics.Debugger.Break();
+            //-------------------------------
+            //IQuerable
+            var DB = new MyContext();
+            var query = DB.Students.Where(x => x.Age < 40);
+            var QueryText = query.ToString();
+
+            query = query.Where(x => x.StudentName.Contains("h"));
+            QueryText = query.ToString();
+
+            //-------------------------------
+            //IEnumrable 
+            var List = query.ToList();
+            var Count = List.Count();
+            //-------------------------------
+            //Implicit calling ToList
+            foreach (var item in query)
+            {
+                //do something
+            }
+            //-------------------------------
+
+            return View(List);
+        }
 
     }
 }

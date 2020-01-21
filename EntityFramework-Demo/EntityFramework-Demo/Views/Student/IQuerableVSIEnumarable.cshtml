@@ -3,5 +3,13 @@
     ViewBag.Title = "IQuerableVSIEnumarable";
 }
 
-<h2>IQuerableVSIEnumarable</h2>
+@Html.ActionLink("Index", "Index") |
+@Html.ActionLink("IQuerable VS IEnumbarble", "IQuerableVSIEnumarable")
+<h2> Students List</h2>
+<ul>
+    @foreach (var item in Model)
+    {
+        <li><h3>@item.StudentName</h3></li>
+    }
 
+</ul>
